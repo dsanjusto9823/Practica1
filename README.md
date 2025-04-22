@@ -81,7 +81,7 @@ void setup() {
 }
 void loop() {
 ```
-###4.1 Con el envio por puerto série del mensaje y utilizando las funciones del Arduino:
+### 4.1 Con el envio por puerto série del mensaje y utilizando las funciones del Arduino:
 ```
  digitalWrite(LED_PIN, HIGH);
  Serial.println("ON");
@@ -90,7 +90,7 @@ void loop() {
 ```
 Utilizamos de pin de salida el pin 2 y como frecuencia del osciloscopio tenemos 30 kHz.
 
-###4.2 - Con el envio por puerto série y accediendo directamente a los registros:**
+### 4.2 - Con el envio por puerto série y accediendo directamente a los registros:**
 ```
   uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
   *gpio_out |= (1 << LED_PIN);
@@ -100,14 +100,14 @@ Utilizamos de pin de salida el pin 2 y como frecuencia del osciloscopio tenemos 
 
 ```
 Seguimos usando el pin 2 y la frecuencia es de **30 kHz**.
-###4.3 - Sin el envio por el puerto série del mensaje i utilizando las funciones de Arduino:
+### 4.3 - Sin el envio por el puerto série del mensaje i utilizando las funciones de Arduino:
 ```
 digitalWrite(LED_PIN, HIGH);
 digitalWrite(LED_PIN, LOW);
 ```
 En el tercer caso la frecuencia es de 1.7 MHz.
 
-###4.4 - Sin el envio por el puerto série y accediendo directamente a los registros:
+### 4.4 - Sin el envio por el puerto série y accediendo directamente a los registros:
 ```
  uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
  *gpio_out |= (1 << LED_PIN);
