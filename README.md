@@ -65,3 +65,56 @@ void loop() {
 
 ```
 Se ha modificado para que actue sobre los registros tanto de entrada como de salida, se ha realizado a partir de las funciones que indicaba la practica, el gpio_out. 
+
+## 4.Medidor de frecuencia: 
+Lo unico que hacemos en este es cambiar elpin de salida por uno que este libre y medir con el osciloscopio la frecuencia maxima tanto de apagado como de encendido. Tomamos estas en estos cuatro casos:
+· Con el envio por el puerto série del mensaje i utilizando las funciones de Arduino
+· Con el envio por el puerto série y accedirendo directamente a los registros
+· Sin el envio por el puerto série del mensaje i utilizando las funciones de Arduino
+· Sin el envio por el puerto série y accedirendo directamente a los registros
+```
+#define LED_PIN 2  // Cambia el pin según disponibilidad
+void setup() {
+    Serial.begin(115200); // Iniciar puerto serie
+    gpio_pad_select_gpio(LED_PIN);
+    gpio_set_direction((gpio_num_t)LED_PIN, GPIO_MODE_OUTPUT);
+}
+void loop() {
+```
+###4.1 Con el envio por puerto série del mensaje y utilizando las funciones del Arduino:
+```
+ digitalWrite(LED_PIN, HIGH);
+ Serial.println("ON");
+ digitalWrite(LED_PIN, LOW);
+ Serial.println("OFF");
+```
+Utilizamos de pin de salida el pin 2 y como frecuencia del osciloscopio tenemos 30 kHz.
+
+###4.2 - Con el envio por puerto série y accediendo directamente a los registros:**
+```
+  uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
+  *gpio_out |= (1 << LED_PIN);
+   Serial.println("ON");
+   *gpio_out &= ~(1 << LED_PIN);
+   Serial.println("OFF");
+
+```
+Seguimos usando el pin 2 y la frecuencia es de **30 kHz**.
+###4.3 - Sin el envio por el puerto série del mensaje i utilizando las funciones de Arduino:
+```
+digitalWrite(LED_PIN, HIGH);
+digitalWrite(LED_PIN, LOW);
+```
+En el tercer caso la frecuencia es de 1.7 MHz.
+
+###4.4 - Sin el envio por el puerto série y accediendo directamente a los registros:
+```
+ uint32_t *gpio_out = (uint32_t *)GPIO_OUT_REG;
+ *gpio_out |= (1 << LED_PIN);
+ *gpio_out &= ~(1 << LED_PIN);
+
+```
+Y en este último caso es de **4.7 MHz**
+
+
+
